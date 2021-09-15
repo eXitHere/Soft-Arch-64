@@ -1,0 +1,9 @@
+@startuml
+actor User
+database Database 
+User -> Server: request
+Server -> Database: yes
+Database -> Server: no
+Server --> User: response
+@enduml 
+' End of UML diagram
