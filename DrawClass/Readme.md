@@ -10,6 +10,7 @@
 
 -   วาดเอง DRAW.io
 -   code เอา : plantUML
+    -   Doc : https://plantuml.com/class-diagram
 
 ###### How to : อ่าน Code ภาษา JAVA แล้วเขียนเป็น UML ไม่ต้องเขียน class ออกมาทั้งหมดก็ได้ เอาแค่พอดี ๆ (อาจารย์บอกมา)
 
