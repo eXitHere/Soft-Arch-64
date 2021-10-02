@@ -1,0 +1,5 @@
+soft-arch
+*.class
+*.Identifier
+/Solid_Principles_Exercise/book/nbproject/private/
+/Solid_Principles_Exercise/book/build/
