@@ -1,1 +1,3 @@
 แฮร่
+
+`find . -name "*.Identifier" -type f -delete`
