@@ -20,14 +20,17 @@ public class BookMetadataFormatterFactory {
             throws IOException, ParserConfigurationException {
         BookMetadataFormatter formatter;
         switch (format) {
-            case CSV ->
-                    formatter = new CSVBookMetadataFormatter();
-            case XML ->
-                    formatter = new XMLBookMetadataFormatter();
-            case JSON ->
-                    formatter = new JSONBookMetadataFormatter();
-            default ->
-                    formatter = null;
+            case CSV:
+                formatter = new CSVBookMetadataFormatter();
+                break;
+            case XML:
+                formatter = new XMLBookMetadataFormatter();
+                break;
+            case JSON:
+                formatter = new JSONBookMetadataFormatter();
+                break;
+            default:
+                formatter = null;
         }
         return formatter;
     }

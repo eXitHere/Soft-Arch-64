@@ -5,8 +5,8 @@ import org.apache.commons.csv.CSVPrinter;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.LinkedList;
+import java.util.List;
 
 public class CSVBookMetadataFormatter implements BookMetadataFormatter {
 
@@ -21,8 +21,12 @@ public class CSVBookMetadataFormatter implements BookMetadataFormatter {
         writer = new StringWriter();
         try {
             csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT);
-            Stream<String> headers = Arrays.stream(Book.Metadata.values()).map(Book.Metadata::getValue);
-            csvPrinter.printRecord(headers.toList());
+//            Stream<String> headers = Arrays.stream(Book.Metadata.values()).map(Book.Metadata::getValue);
+            List<String> headers = new LinkedList<String>();
+            for (Book.Metadata metadata : Book.Metadata.values()) {
+                headers.add(metadata.value);
+            }
+            csvPrinter.printRecord(headers);
         } catch (IOException e) {
             e.printStackTrace();
         }
