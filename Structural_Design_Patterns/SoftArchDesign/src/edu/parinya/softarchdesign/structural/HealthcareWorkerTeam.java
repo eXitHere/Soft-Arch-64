@@ -15,11 +15,12 @@ public class HealthcareWorkerTeam implements HealthcareServiceable {
 
     @Override
     public double getPrice() {
-        double totalPrice = 0.0f;
+        double totalPrice = 0;
         for(HealthcareServiceable w : workers) {
             totalPrice = totalPrice + w.getPrice();
         }
         return Double.parseDouble((String.format("%.1f", totalPrice)));
+//        return totalPrice;
     }
 
     public void addMember(HealthcareServiceable w) {

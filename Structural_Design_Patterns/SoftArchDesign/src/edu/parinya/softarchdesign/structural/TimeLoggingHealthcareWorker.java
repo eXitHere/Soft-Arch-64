@@ -9,6 +9,6 @@ public class TimeLoggingHealthcareWorker extends HealthcareWorkerDecorator{
     @Override
     public void service() {
         System.out.print(new java.util.Date() + ": ");
-        worker.service();
+        super.service();
     }
 }
