@@ -1,16 +1,31 @@
 package app;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.io.FileWriter;
+
 public class SymbolSubscriber extends StringSubscriber {
 
-  SymbolSubscriber(){
+  String name = "Symbol";
+
+  SymbolSubscriber() {
     super("Symbol");
   }
 
   @Override
-  String use(String str) {
-    // big thank : https://www.codegrepper.com/code-examples/java/how+to+remove+symbols+from+a+string+in+java
-    // only [0-9]
-    return str.replaceAll("[^a-zA-Z0-9]","");
+  public void onNext(String item) {
+    try {
+      // big thank :
+      // https://www.codegrepper.com/code-examples/java/how+to+remove+symbols+from+a+string+in+java
+      Writer file = new FileWriter(name + ".txt", true);
+      // String newStr = item.replaceAll("[^a-zA-Z0-9]", "");
+      String newStr = item.replaceAll("[a-zA-Z0-9]", "");
+      // System.out.println(newStr);
+      file.write(newStr + "\n");
+      file.close();
+    } catch (IOException error) {
+      error.printStackTrace();
+    }
   }
 
 }

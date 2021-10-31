@@ -1,16 +1,16 @@
 package app;
 
-import java.util.concurrent.ExecutorService;
+// import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Flow.Subscription;
 import java.util.concurrent.Flow.Subscriber;
 
 public class StringSubscription implements Subscription {
   private final Subscriber<String> subscriber;
-  private final ExecutorService executor;
+  // private final ExecutorService executor;
 
-  public StringSubscription(Subscriber<String> subscriber, ExecutorService executorService) {
+  public StringSubscription(Subscriber<String> subscriber) {
     this.subscriber = subscriber;
-    this.executor = executorService;
+    // this.executor = executorService;
   }
 
   @Override
@@ -20,22 +20,19 @@ public class StringSubscription implements Subscription {
 
   @Override
   public void request(long n) {
-    if(n<0) {
+    if (n < 0) {
       IllegalArgumentException ex = new IllegalArgumentException();
-      executor.execute(() -> subscriber.onError(ex)); 
-    }
-    else {
+      subscriber.onError(ex);
+    } else {
       // executor.submit(() -> {
-      //   subscriber.onNext();
-      //   subscriber.onComplete();
+      // subscriber.onNext();
+      // subscriber.onComplete();
       // });
     }
   }
 
   public void publish(String inp) {
-    executor.execute(() -> {
-      subscriber.onNext(inp);
-    });
+    subscriber.onNext(inp);
   }
 
 }
