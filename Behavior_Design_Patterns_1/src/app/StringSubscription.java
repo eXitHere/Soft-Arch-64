@@ -1,38 +1,44 @@
 package app;
 
-// import java.util.concurrent.ExecutorService;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Flow.Subscription;
+// import java.util.concurrent.Flow.Publisher;
 import java.util.concurrent.Flow.Subscriber;
 
 public class StringSubscription implements Subscription {
-  private final Subscriber<String> subscriber;
-  // private final ExecutorService executor;
+  private Subscriber<String> subscriber;
+  private final ExecutorService executor;
 
-  public StringSubscription(Subscriber<String> subscriber) {
-    this.subscriber = subscriber;
-    // this.executor = executorService;
+  public StringSubscription(Subscriber<? super String> subscriber, ExecutorService executorService) {
+    this.subscriber = (Subscriber<String>) subscriber;
+    this.executor = executorService;
   }
 
   @Override
-  public void cancel() {
-    // do noting :3
+  public synchronized void cancel() {
   }
 
   @Override
-  public void request(long n) {
-    if (n < 0) {
-      IllegalArgumentException ex = new IllegalArgumentException();
-      subscriber.onError(ex);
-    } else {
-      // executor.submit(() -> {
-      // subscriber.onNext();
-      // subscriber.onComplete();
-      // });
-    }
+  public synchronized void request(long n) {
+    //
   }
 
-  public void publish(String inp) {
-    subscriber.onNext(inp);
+  public synchronized void save(String inp) {
+    executor.submit(() -> {
+      try {
+        subscriber.onNext(inp);
+      } catch (Exception error) {
+        subscriber.onError(error);
+      }
+    });
+  }
+
+  public boolean check(String item) {
+    // System.out.print("check " + item + " ");
+    // System.out.println(((StringSubscriber) this.subscriber).check(item));
+    return ((StringSubscriber) this.subscriber).check(item);
   }
 
 }
