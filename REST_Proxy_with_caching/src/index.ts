@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 let caching = { data: {}, timestamp: 0 };
 
 app.get('/', async (req: Request, res: Response) => {
-  console.log(new Date().getTime() - caching.timestamp);
+  // console.log(new Date().getTime() - caching.timestamp);
   if (new Date().getTime() - caching.timestamp > 1000 * 60 * 2) {
     const timezone = await axios.get('http://worldtimeapi.org/api/timezone/');
     // console.log('fetch');
