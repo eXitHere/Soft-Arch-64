@@ -1,35 +1,32 @@
 import express, { Request, Response } from 'express';
 import axios from 'axios';
+import { Caching } from './caching';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-let caching = { data: {}, timestamp: 0 };
-
 app.get('/', async (req: Request, res: Response) => {
-  // console.log(new Date().getTime() - caching.timestamp);
-  if (new Date().getTime() - caching.timestamp > 1000 * 60 * 2) {
-    const timezone = await axios.get('http://worldtimeapi.org/api/timezone/');
+  const cache = Caching.getInstance();
+  if (new Date().getTime() - cache.getTimestamp() > 1000 * 60 * 2) {
+    const timezone = await axios.get(
+      'http://worldtimeapi.org/api/timezone/Asia/Bangkok',
+    );
     // console.log('fetch');
-    caching = {
-      data: timezone.data,
-      timestamp: new Date().getTime(),
-    };
+    cache.set(timezone.data);
   }
-  res.send(caching);
+  res.send(cache.getCache());
 });
 
 app.delete('/', async (req: Request, res: Response) => {
-  // console.log(new Date().getTime() - caching.timestamp);
-  const timezone = await axios.get('http://worldtimeapi.org/api/timezone/');
+  const cache = Caching.getInstance();
+  const timezone = await axios.get(
+    'http://worldtimeapi.org/api/timezone/Asia/Bangkok',
+  );
   // console.log('fetch');
-  caching = {
-    data: timezone.data,
-    timestamp: new Date().getTime(),
-  };
-  res.send(caching);
+  cache.set(timezone.data);
+  res.send(cache.getCache());
 });
 
 app.listen(5000, () => {
